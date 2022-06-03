@@ -6,9 +6,9 @@ class Stage {
         backgroundColor: '#FFFFFF',
         width: 0,
         height: 0,
+        frames: 30, // 1s 30 帧
         draw: function (ctx) {
             ctx.fillStyle = this.backgroundColor;
-            ctx.clearRect(0, 0, this.width, this.height);
             ctx.fillRect(0, 0, this.width, this.height);
         }
     };
@@ -17,12 +17,15 @@ class Stage {
         this.settings = { ...this.settings, ...settings };
     }
 
-    update(ctx) {
+    #update(ctx) {
+        ctx.clearRect(0, 0, this.settings.width, this.settings.height);
         this.settings.draw(ctx);
         this.#items.map((item) => {
             item.update(ctx);
         })
     }
+
+    update = this.#update.bind(this);
 
     createItem(settings) {
         const item = new Item(settings);
@@ -33,16 +36,30 @@ class Stage {
 
 class Item {
 
+    #times = 0; // 内部计时器
+
     settings = {
         x: 0,
         y: 0,
         width: 50,
         height: 50,
         color: '#FFFFFF',
-        direction: 0, // 0 ~ 3
+        direction: 1, // 0 ~ 3 顺时针
+        speed: 1, // n 帧 update 一次, auto = false 则失效
+        auto: false, // 是否自动变化
+        animate: function () {
+            const offset = [
+                [0, -1],
+                [1, 0],
+                [0, 1],
+                [-1, 0]
+            ];
+
+            this.x += offset[this.direction][0];
+            this.y += offset[this.direction][1];
+        },
         draw: function (ctx) {
             ctx.fillStyle = this.color;
-            ctx.clearRect(this.x, this.y, this.width, this.height);
             ctx.fillRect(this.x, this.y, this.width, this.height);
         },
     };
@@ -52,8 +69,15 @@ class Item {
     }
 
     update(ctx) {
+        if (this.settings.auto) {
+            if (this.#times === 0) {
+                this.settings.animate();
+                this.#times = (this.#times + 1) % this.settings.speed;
+            }
+        }
         this.settings.draw(ctx);
     }
+
 }
 
 export class Game {
@@ -87,6 +111,8 @@ export class Game {
     }
 
     start() {
-        this.#stages[this.#currentStage].update(this.#ctx);
+        const stage = this.#stages[this.#currentStage];
+        const ctx = this.#ctx;
+        setInterval(stage.update, 1000 / stage.settings.frames, ctx);
     }
 }
