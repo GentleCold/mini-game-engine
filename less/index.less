@@ -1,0 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+@import "board";
+@width: 400px;
+@height: 400px;
+.board {
+    .board(@width + 10, @height + 10, 10px);
+    > canvas {
+        width: @width;
+        height: @height;
+        margin: auto;
+    }
+}
