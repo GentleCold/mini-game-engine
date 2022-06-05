@@ -17,7 +17,7 @@ js 编写，基于 canvas
 #### 导入：
 <code>import { Game } from './game-engine/game.js';</code>
 #### 创建游戏主程序和 Stage：
-```ecmascript 6
+```js
 const canvas = document.getElementById('game');
 let game = new Game(canvas);
 let stage = game.createStage({
@@ -25,7 +25,7 @@ let stage = game.createStage({
 });
 ```
 #### 创建 Item：
-```ecmascript 6
+```js
 const item = stage.createItem({
     color: '#ffffff',
     x: canvas.width / 2,
@@ -52,13 +52,13 @@ const item = stage.createItem({
 });
 ```
 #### 绑定事件：
-```ecmascript 6
+```js
 // event 即浏览器的 Event
 // 另外实现了 'collision', 'collisionIn', 'collisionOut'事件
 item.bind(event, callback);
 ```
 #### 开始执行：
-```ecmascript 6
+```js
 game.init();
 ```
 ### License
