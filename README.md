@@ -1,4 +1,4 @@
-#mini 游戏引擎
+# mini 游戏引擎
 
 js 编写，基于 canvas
 
@@ -11,12 +11,12 @@ js 编写，基于 canvas
 * 碰撞事件
 * 重力模拟
 
-###使用方法：
-####结构：
+### 使用方法：
+#### 结构：
 三个大类：Game, Stage, Item
-####导入：
+#### 导入：
 <code>import { Game } from './game-engine/game.js';</code>
-####创建游戏主程序和 Stage：
+#### 创建游戏主程序和 Stage：
 ```ecmascript 6
 const canvas = document.getElementById('game');
 let game = new Game(canvas);
@@ -24,7 +24,7 @@ let stage = game.createStage({
     backgroundColor: '#000000', 
 });
 ```
-####创建 Item：
+#### 创建 Item：
 ```ecmascript 6
 const item = stage.createItem({
     color: '#ffffff',
@@ -51,17 +51,17 @@ const item = stage.createItem({
     ],
 });
 ```
-####绑定事件：
+#### 绑定事件：
 ```ecmascript 6
 // event 即浏览器的 Event
 // 另外实现了 'collision', 'collisionIn', 'collisionOut'事件
 item.bind(event, callback);
 ```
-####开始执行：
+#### 开始执行：
 ```ecmascript 6
 game.init();
 ```
-###License
+### License
 MIT
 
 ~~ps：碰撞那块实在写的很烂，写不下去了...~~
